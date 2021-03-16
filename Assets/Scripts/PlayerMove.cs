@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody rb;
     private float groundOffsetChecker=0.4f;
     public LayerMask layermask;
-    public float walkSpeed = 6;
+    public float walkSpeed = 5;
     public float runSpeed = 10;
     public float jumpforce = 6;
     public bool runToggle = false;
@@ -30,15 +30,17 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         slow = false;
+        runToggle = false;
         float vel = rb.velocity.magnitude;
         //running
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            runToggle = !runToggle;
+            runToggle = true;
 
         }
         if (runToggle)
         {
+            Debug.Log("THIS WORK");
             MoveSpeed = runSpeed;
 
             
@@ -87,8 +89,9 @@ public class PlayerMove : MonoBehaviour
         /*
         rb.velocity = new Vector3(x, rb.velocity.y, y)*MoveSpeed;
         */
-      
+
         //using transform because u are a pussy
+        
         Vector3 movePosition = transform.right * x + transform.forward * y;
         Vector3 newMovePosition = new Vector3(movePosition.x, rb.velocity.y, movePosition.z);
             rb.velocity = newMovePosition;
@@ -98,8 +101,10 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         //wtf is this doing here.. gtfo ... shit.. dont delete.. looks like a correction code
-        
+
+        Debug.Log(rb.velocity.magnitude);
         Vector3 oldPos = rb.position;
+
         rb.position += Vector3.back * MoveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(oldPos);
         
