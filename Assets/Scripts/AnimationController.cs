@@ -64,7 +64,7 @@ public class AnimationController : MonoBehaviour
         bool backCheck = Input.GetKey("s");
         //bool isAlreadyLookingBack = animator.GetBool(lookBackCheckHash);
         // checking is already jumping
-        bool isAlreadyJumping = animator.GetBool(jumpCheckHash);
+        
 
 
 
@@ -137,15 +137,26 @@ public class AnimationController : MonoBehaviour
 
         }
         //grounding
+        bool isAlreadyJumping = animator.GetBool(jumpCheckHash);
+        Debug.Log("old");
+        Debug.Log(isAlreadyJumping);
         Grounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), groundOffsetChecker, layermask);
-        if (!Grounded && !isAlreadyJumping)
-        {
-            animator.SetBool(jumpCheckHash, true);
-
-        }
-        else
+        
+       if(!Grounded && isAlreadyJumping)
         {
             animator.SetBool(jumpCheckHash, false);
+        }
+        if (Grounded)
+        {
+            animator.SetBool(jumpCheckHash,false);
+        }
+        if (!Grounded && !isAlreadyJumping)
+        {
+            Debug.Log("new");
+            Debug.Log(isAlreadyJumping);
+
+            animator.SetBool(jumpCheckHash, true);
+
         }
     }
 }
