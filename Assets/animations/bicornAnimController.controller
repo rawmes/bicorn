@@ -195,27 +195,27 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -5474712411586331760}
-    m_Position: {x: 40, y: 10, z: 0}
+    m_Position: {x: -40, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7722058556024865023}
-    m_Position: {x: -70, y: -150, z: 0}
+    m_Position: {x: -140, y: -140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8657791706354410731}
-    m_Position: {x: 220, y: -150, z: 0}
+    m_Position: {x: 230, y: -150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7503846353109584569}
     m_Position: {x: 360, y: -370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2320586770287985942}
-    m_Position: {x: 150, y: -270, z: 0}
+    m_Position: {x: 100, y: -290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -8899483269411482919}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -70, y: -390, z: 0}
-  m_EntryPosition: {x: 40, y: 140, z: 0}
+  m_AnyStatePosition: {x: -190, y: -400, z: 0}
+  m_EntryPosition: {x: -30, y: 170, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -5474712411586331760}
@@ -266,7 +266,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: isRunning
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8657791706354410731}
   m_Solo: 0
@@ -308,15 +311,15 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isLookingBack
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   - m_Name: weight
     m_Type: 1
     m_DefaultFloat: 0.845
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isLookingBack
+    m_Type: 4
+    m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
@@ -477,7 +480,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: isWalking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7722058556024865023}
