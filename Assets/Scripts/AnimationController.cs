@@ -53,10 +53,6 @@ public class AnimationController : MonoBehaviour
         bool backCheck = Input.GetKey("s");
         bool isAlreadyLookingBack = animator.GetBool(lookBackCheckHash);
 
-        
-
-
-
         //  making walk true
         if (!isAlreadyWalking && walkCheck)
         {
