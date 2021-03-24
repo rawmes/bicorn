@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CursorLock : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class CursorLock : MonoBehaviour
     private bool look;
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class CursorLock : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(buttonInput);
+        //Debug.Log(buttonInput);
         if(buttonInput != 0f)
         {
             Cursor.lockState=CursorLockMode.None;

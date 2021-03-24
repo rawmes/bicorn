@@ -12,7 +12,7 @@ public class IdleMove : MonoBehaviour
     public Vector2 lookInput;
     public Vector2 movementInput;
 
-    //private float x = 0;
+    private float x = 0;
     private float y = 0;
 
     PlayerMovement playerControls;
@@ -48,10 +48,10 @@ public class IdleMove : MonoBehaviour
         if ((movementInput.y == 0f))
         {
             y += -lookInput.y;
-            //x += -lookInput.x;
-            //x = Mathf.Clamp(x, -90, 90);
-            player.transform.localRotation = Quaternion.Euler(0, y, 0);
-            //player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            x += lookInput.x;
+            x = Mathf.Clamp(x, 0, 30);
+            player.transform.localRotation = Quaternion.Euler(0, y,0);
+            //player.transform.localRotation = Quaternion.Euler(x, 0, 0);
         }
         if (!(movementInput.y == 0f))
         {

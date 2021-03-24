@@ -12,7 +12,7 @@ public class PlayerLook : MonoBehaviour
     public Vector2 lookInput;
     public Vector2 movementInput;
 
-    //private float x = 0;
+    private float x = 0;
     private float y = 0;
 
     PlayerMovement playerControls;
@@ -47,7 +47,7 @@ public class PlayerLook : MonoBehaviour
         
         //Debug.Log(lookInput);
         //clamping the inputs
-        //x= Mathf.Clamp(x, -90, 90);
+        
         //y = Mathf.Clamp(y,)
         // y = Mathf.Clamp(y)
 
@@ -56,6 +56,8 @@ public class PlayerLook : MonoBehaviour
         if(!( movementInput.y == 0f))
         {
             y += -lookInput.y;
+            x += -lookInput.x;
+            //x = Mathf.Clamp(x, -45, 45);
             player.transform.localRotation = Quaternion.Euler(0, y, 0);
         }
        /* if ((movementInput.y == 0f))
