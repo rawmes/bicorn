@@ -11,11 +11,12 @@ public class PlayerMove : MonoBehaviour
     //private PlayerMovement movementControl;
     PlayerMovement playerControls;
     public Transform player;
-    private float walkSpeed = 1f;
-    public float jumpHeight = 1f;
+    private float walkSpeed = 0.6f;
+    public float jumpForce = 2.5f;
     public LayerMask layerMask;
     public float groundOffset= 0.1f;
     public bool groundedPlayer;
+    public Rigidbody rb;
 
     public Vector2 movementInput;
     public float jumpControl;
@@ -28,7 +29,9 @@ public class PlayerMove : MonoBehaviour
     private Vector2 lookInput;
     private Vector3 playerVelocity;
     private Transform CameraTransform;
-    private Rigidbody rb;
+    private float moveSpeed;
+    
+    
    
     private float jumpInput;
 
@@ -40,6 +43,8 @@ public class PlayerMove : MonoBehaviour
             playerControls.Movement.walk.performed += context => movementInput = context.ReadValue<Vector2>();
             
             playerControls.Movement.look.performed += context => lookInput = context.ReadValue<Vector2>();
+            playerControls.Movement.jump.performed += context => jumpInput = context.ReadValue<float>();
+            playerControls.Movement.run.performed += context => sprintInput = context.ReadValue<float>();
             playerControls.Enable();
         }
     }
@@ -64,15 +69,37 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        Vector3 movePosition = transform.right * movementInput.x + transform.forward * movementInput.y*walkSpeed;
-        Vector3 newMovePosition = new Vector3(movePosition.x, rb.velocity.y, movePosition.z);
-        
-        rb.velocity = newMovePosition;
-        if(movementInput == new Vector2(0f, 0f))
+        if (movementInput != new Vector2(0f, 0f) && sprintInput != 0f)
         {
-            rb.velocity = new Vector3(0f,rb.velocity.y,0f);
+            moveSpeed = walkSpeed + 1;
         }
+        else
+        {
+            moveSpeed = walkSpeed;
+        }
+        Vector3 movePosition = transform.right * movementInput.x*moveSpeed + transform.forward * movementInput.y*moveSpeed;
+        Vector3 newMovePosition = new Vector3(movePosition.x, rb.velocity.y, movePosition.z);
+        groundedPlayer = Physics.CheckSphere(player.position, groundOffset,layerMask);
+        //Debug.Log(jumpInput);
+        if (jumpInput == 1f && groundedPlayer)
+        {
+            rb.AddForce(0,jumpForce, 0);
+            Debug.Log(rb.velocity);
+        }
+        rb.velocity = newMovePosition;
+        if (movementInput == new Vector2(0f, 0f))
+        {
+            
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+
+        }
+        else
+        {
+            Debug.Log(rb.velocity);
+
+        }
+        
+        
     }
     public void onWalk(InputAction.CallbackContext context)
     {

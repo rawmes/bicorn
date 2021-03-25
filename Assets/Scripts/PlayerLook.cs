@@ -8,7 +8,7 @@ public class PlayerLook : MonoBehaviour
     public Rigidbody rb;
     public Transform player;
     public float delayTime = 6;
-    public float mouseSensitivity = 6;
+    public float mouseSensitivity = 3;
     public Vector2 lookInput;
     public Vector2 movementInput;
 
@@ -42,32 +42,19 @@ public class PlayerLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //input
-        //x += lookInput.x;
-        
-        //Debug.Log(lookInput);
-        //clamping the inputs
-        
-        //y = Mathf.Clamp(y,)
-        // y = Mathf.Clamp(y)
-
-        //rotation 
-        //player.transform.localRotation = Quaternion.Euler(x, 0, 0);
-        if(!( movementInput.y == 0f))
+        //look around when walking
+        if (!(movementInput.y == 0f))
         {
-            y += -lookInput.y;
-            x += -lookInput.x;
+            x = y;
+            y += -lookInput.y*mouseSensitivity;
+
             //x = Mathf.Clamp(x, -45, 45);
-            player.transform.localRotation = Quaternion.Euler(0, y, 0);
+            Mathf.Lerp(y, x, Time.deltaTime);
+            player.transform.localRotation = Quaternion.Euler(0f, y , 0f);
+            
         }
-       /* if ((movementInput.y == 0f))
-        {
-            y = y - Time.deltaTime * delayTime;
-            player.transform.localRotation = Quaternion.Euler(0, y, 0);
-
-        }*/
     }
-
+  
 
 
 
