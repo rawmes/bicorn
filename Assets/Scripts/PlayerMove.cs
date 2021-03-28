@@ -12,9 +12,10 @@ public class PlayerMove : MonoBehaviour
     PlayerMovement playerControls;
     public Transform player;
     private float walkSpeed = 0.6f;
-    public float jumpForce = 2.5f;
+    public float jumpForce = 10f;
+    private float jumpForceProxy;
     public LayerMask layerMask;
-    public float groundOffset= 0.1f;
+    public float groundOffset= 0.01f;
     public bool groundedPlayer;
     public Rigidbody rb;
 
@@ -30,10 +31,11 @@ public class PlayerMove : MonoBehaviour
     private Vector3 playerVelocity;
     private Transform CameraTransform;
     private float moveSpeed;
+    private bool jumpPressed = false;
     
     
    
-    private float jumpInput;
+    public float jumpInput;
 
     private void OnEnable()
     {
@@ -69,24 +71,55 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // giving movespeed and jumpspeed here
+
         if (movementInput != new Vector2(0f, 0f) && sprintInput != 0f)
         {
             moveSpeed = walkSpeed + 1;
+            jumpForceProxy = jumpForce*10f;
         }
         else
         {
             moveSpeed = walkSpeed;
+            jumpForceProxy = jumpForce*5f;
         }
+
+        //moving the character here
         Vector3 movePosition = transform.right * movementInput.x*moveSpeed + transform.forward * movementInput.y*moveSpeed;
         Vector3 newMovePosition = new Vector3(movePosition.x, rb.velocity.y, movePosition.z);
-        groundedPlayer = Physics.CheckSphere(player.position, groundOffset,layerMask);
-        //Debug.Log(jumpInput);
+        rb.velocity = newMovePosition;
+
+
+        // checking if player is grounded
+        groundedPlayer = Physics.CheckSphere(player.position, groundOffset, layerMask);
+
+        //jumping if grounded and jumpinput is triggerd else jump input is discarded.
         if (jumpInput == 1f && groundedPlayer)
         {
-            rb.AddForce(0,jumpForce, 0);
-            Debug.Log(rb.velocity);
+            //Debug.Log(jumpPressed);
+            if (jumpPressed)
+            {
+                rb.AddForce(0, jumpForceProxy, 0);
+
+                Debug.Log("jumpVelocity");
+                
+                Debug.Log(jumpForceProxy);
+                jumpPressed = false;
+
+
+            }
+            jumpPressed =false;
+           
+
         }
-        rb.velocity = newMovePosition;
+        else
+        {
+            jumpPressed =true;
+        }
+
+        //stopping the player completely if the move key is released except for the vertical velocity which will be taken care by gravity
+        
         if (movementInput == new Vector2(0f, 0f))
         {
             
@@ -95,36 +128,11 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            Debug.Log(rb.velocity);
+           // Debug.Log(rb.velocity);
 
         }
         
         
     }
-    public void onWalk(InputAction.CallbackContext context)
-    {
-        walkInput = context.ReadValue<Vector2>();
-        float x = walkInput.x;
-        float y = walkInput.y;
-        Debug.Log("walk");
-        Debug.Log(x);
-        Debug.Log(y);
-    }
-    public void onSprint(InputAction.CallbackContext context)
-    {
-        sprintInput = context.ReadValue<float>();
-        Debug.Log("run");
-        Debug.Log(sprintInput);
-        
-    }
-    public void onJump(InputAction.CallbackContext context)
-    {
-        jumpInput = context.ReadValue<float>();
-        Debug.Log("run");
-        Debug.Log(jumpInput);
-    }
-    public void onRam(InputAction.CallbackContext context)
-    {
-        Debug.Log("HIT IT!!");
-    }
+   
 }

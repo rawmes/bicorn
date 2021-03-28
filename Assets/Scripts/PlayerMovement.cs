@@ -49,6 +49,14 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""scroll/Y"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""061d9d91-ffa1-433d-ab80-8e1ec3377414"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
                     ""action"": ""run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa6036bf-2fbc-4445-beae-2ae0ebf6f2b5"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""inclusive"",
+                    ""action"": ""scroll/Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -184,6 +203,7 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
         m_Movement_look = m_Movement.FindAction("look", throwIfNotFound: true);
         m_Movement_jump = m_Movement.FindAction("jump", throwIfNotFound: true);
         m_Movement_run = m_Movement.FindAction("run", throwIfNotFound: true);
+        m_Movement_scrollY = m_Movement.FindAction("scroll/Y", throwIfNotFound: true);
         // UserInterface
         m_UserInterface = asset.FindActionMap("UserInterface", throwIfNotFound: true);
         m_UserInterface_cursorLock = m_UserInterface.FindAction("cursorLock", throwIfNotFound: true);
@@ -240,6 +260,7 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
     private readonly InputAction m_Movement_look;
     private readonly InputAction m_Movement_jump;
     private readonly InputAction m_Movement_run;
+    private readonly InputAction m_Movement_scrollY;
     public struct MovementActions
     {
         private @PlayerMovement m_Wrapper;
@@ -248,6 +269,7 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
         public InputAction @look => m_Wrapper.m_Movement_look;
         public InputAction @jump => m_Wrapper.m_Movement_jump;
         public InputAction @run => m_Wrapper.m_Movement_run;
+        public InputAction @scrollY => m_Wrapper.m_Movement_scrollY;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,6 +291,9 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
                 @run.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnRun;
                 @run.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnRun;
                 @run.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnRun;
+                @scrollY.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnScrollY;
+                @scrollY.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnScrollY;
+                @scrollY.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnScrollY;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -285,6 +310,9 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
                 @run.started += instance.OnRun;
                 @run.performed += instance.OnRun;
                 @run.canceled += instance.OnRun;
+                @scrollY.started += instance.OnScrollY;
+                @scrollY.performed += instance.OnScrollY;
+                @scrollY.canceled += instance.OnScrollY;
             }
         }
     }
@@ -337,6 +365,7 @@ public class @PlayerMovement : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnScrollY(InputAction.CallbackContext context);
     }
     public interface IUserInterfaceActions
     {

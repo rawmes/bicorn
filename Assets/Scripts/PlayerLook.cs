@@ -8,12 +8,13 @@ public class PlayerLook : MonoBehaviour
     public Rigidbody rb;
     public Transform player;
     public float delayTime = 6;
-    public float mouseSensitivity = 3;
+    public float mouseSensitivity = 6;
     public Vector2 lookInput;
     public Vector2 movementInput;
+    
 
     private float x = 0;
-    private float y = 0;
+    
 
     PlayerMovement playerControls;
 
@@ -25,6 +26,7 @@ public class PlayerLook : MonoBehaviour
             playerControls.Movement.walk.performed += context => movementInput = context.ReadValue<Vector2>();
 
             playerControls.Movement.look.performed += context => lookInput = context.ReadValue<Vector2>();
+            
             playerControls.Enable();
         }
     }
@@ -42,15 +44,16 @@ public class PlayerLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        x += lookInput.x * 0.022f * mouseSensitivity;
         //look around when walking
         if (!(movementInput.y == 0f))
         {
-            x = y;
-            y += -lookInput.y*mouseSensitivity;
+            
+           
 
             //x = Mathf.Clamp(x, -45, 45);
-            Mathf.Lerp(y, x, Time.deltaTime);
-            player.transform.localRotation = Quaternion.Euler(0f, y , 0f);
+            //Mathf.Lerp(y, x, Time.deltaTime);
+            player.transform.localRotation = Quaternion.Euler(0f, x , 0f);
             
         }
     }

@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "scroll/Y",
+                    "type": "PassThrough",
+                    "id": "061d9d91-ffa1-433d-ab80-8e1ec3377414",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -124,6 +132,17 @@
                     "processors": "",
                     "groups": "inclusive",
                     "action": "run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa6036bf-2fbc-4445-beae-2ae0ebf6f2b5",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "inclusive",
+                    "action": "scroll/Y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
