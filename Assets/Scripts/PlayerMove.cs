@@ -11,12 +11,13 @@ public class PlayerMove : MonoBehaviour
     //private PlayerMovement movementControl;
     PlayerMovement playerControls;
     public Transform player;
-    private float walkSpeed = 0.6f;
-    public float jumpForce = 10f;
+    private float walkSpeed = 0.4f;
+    public float jumpForce = 15f;
     private float jumpForceProxy;
     public LayerMask layerMask;
     public float groundOffset= 0.01f;
     public bool groundedPlayer;
+    public bool moving;
     public Rigidbody rb;
 
     public Vector2 movementInput;
@@ -32,6 +33,7 @@ public class PlayerMove : MonoBehaviour
     private Transform CameraTransform;
     private float moveSpeed;
     private bool jumpPressed = false;
+    
     
     
    
@@ -124,12 +126,14 @@ public class PlayerMove : MonoBehaviour
         {
             
             rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+            moving = false;
+
 
         }
         else
         {
-           // Debug.Log(rb.velocity);
-
+            // Debug.Log(rb.velocity);
+            moving = true;
         }
         
         
