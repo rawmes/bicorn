@@ -53,7 +53,7 @@ public class AnimationController : MonoBehaviour
         }
         else
         {
-            float delaytime = 0.25f;                        // here lies the delay time for animation
+            float delaytime = 0.1f;                        // here lies the delay time for animation
             counter += 0.01f;
             if (counter > delaytime)
             {

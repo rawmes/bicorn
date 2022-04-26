@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
     PlayerMovement playerControls;
     public Transform player;
     private float walkSpeed = 0.4f;
-    public float jumpForce = 15f;
+    public float jumpForce = 20f;
     private float jumpForceProxy;
     public LayerMask layerMask;
     public float groundOffset= 0.01f;

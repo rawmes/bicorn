@@ -76,14 +76,28 @@ public class PlatformMove : MonoBehaviour
         }
         currentTarget = points[pointNumber];
     }
-   
+    public GameObject Player;
+    private Vector3 scaleStorage;
     private void OnTriggerEnter(Collider other)
     {
-        other.transform.parent = transform;
+
+        if (other.gameObject == Player)
+        {
+            scaleStorage = other.transform.localScale;
+            other.transform.parent = transform;
+            other.transform.localScale = scaleStorage;
+        }
+        
     }
     private void OnTriggerExit(Collider other)
     {
-        other.transform.parent = null;
+        if(other.gameObject == Player)
+        {
+            other.transform.parent = null;
+            other.transform.localScale = scaleStorage;
+
+        }
+       
         
     } 
 }
